@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>nth child seletor generator</title>
+    <style>
+        /* Box sizing rules */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        /* Remove default margin */
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        p,
+        figure,
+        blockquote,
+        dl,
+        dd {
+            margin: 0;
+        }
+
+        /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+        ul[role='list'],
+        ol[role='list'] {
+            list-style: none;
+        }
+
+        /* Set core root defaults */
+        html:focus-within {
+            scroll-behavior: smooth;
+        }
+
+        /* Set core body defaults */
+        body {
+            min-height: 100vh;
+            text-rendering: optimizeSpeed;
+            line-height: 1.5;
+        }
+
+        /* A elements that don't have a class get default styles */
+        a:not([class]) {
+            text-decoration-skip-ink: auto;
+        }
+
+        /* Make images easier to work with */
+        img,
+        picture {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* Inherit fonts for inputs and buttons */
+        input,
+        button,
+        textarea,
+        select {
+            font: inherit;
+        }
+
+        /* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+        @media (prefers-reduced-motion: reduce) {
+            html:focus-within {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+    <style>
+        main {
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+        }
+
+        .result p {
+            min-height: 1ex;
+            border: 1px solid black;
+            font-size: 1rem;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .result p::before {
+            content: attr(data-attr)
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .result p {
+                border: 1px solid white;
+            }
+        }
+
+        section+section {
+            margin-top: 40px;
+        }
+    </style>
+    <style id="replaceSheet"></style>
+</head>
+
+<body>
+    <main>
+        <article>
+            <section>
+                <form oninput="handleFormInput(event)">
+                    <div>
+                        <label>Select Every</label>
+                        <input type="number" id="every" />
+                        <span>th child</span>
+                        <label>From</label>
+                        <input type="number" id="from" />
+                        <span>th child</span>
+                        <label>Till</label>
+                        <input type="number" id="till" />
+                        <span>th child</span>
+                        in
+                        <select id="order">
+                            <option value="first" selected>top to bottom</option>
+                            <option value="last">bottom to top</option>
+                        </select>
+                        order
+                    </div>
+                    <div>
+                        <p style="text-align: center;">
+                            Your Selector should be
+                        </p>
+                        <p>
+                            <code>
+                                <output name=" x" id="x" for="from till every"></output>
+                            </code>
+                        </p>
+                    </div>
+                </form>
+            </section>
+            <section>
+                <div class="result">
+                    <p data-attr="1"></p>
+                    <p data-attr="2"></p>
+                    <p data-attr="3"></p>
+                    <p data-attr="4"></p>
+                    <p data-attr="5"></p>
+                    <p data-attr="6"></p>
+                    <p data-attr="7"></p>
+                    <p data-attr="8"></p>
+                    <p data-attr="9"></p>
+                    <p data-attr="10"></p>
+                    <p data-attr="11"></p>
+                    <p data-attr="12"></p>
+                    <p data-attr="13"></p>
+                    <p data-attr="14"></p>
+                    <p data-attr="15"></p>
+                    <p data-attr="16"></p>
+                    <p data-attr="17"></p>
+                    <p data-attr="18"></p>
+                    <p data-attr="19"></p>
+                    <p data-attr="20"></p>
+                </div>
+            </section>
+        </article>
+    </main>
+    <script>
+        function handleFormInput(event) {
+            x.value = `p:nth${order.value === "first" ? "" : "-last"}-child(${every.value}n + ${from.value}):nth${order.value === "first" ? "" : "-last"}-child(-${every.value}n + ${till.value})`
+            replaceSheet.innerHTML = `
+                .result ${x.value} {
+                    background-color: red;
+                }
+            `
+        }
+    </script>
+</body>
+
+</html>
