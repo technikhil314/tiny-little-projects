@@ -135,14 +135,17 @@
                 <form oninput="handleFormInput(event)">
                     <div>
                         <label>Select Every</label>
-                        <input type="number" id="every" />
-                        <span>th child</span>
+                        <input type="number" id="every" oninput="handleInput(event, 'forEvery')" />
+                        <span id="forEvery">th</span>
+                        <span>child</span>
                         <label>From</label>
-                        <input type="number" id="from" />
-                        <span>th child</span>
+                        <input type="number" id="from" oninput="handleInput(event, 'forFrom')" />
+                        <span id="forFrom">th</span>
+                        <span>child</span>
                         <label>Till</label>
-                        <input type="number" id="till" />
-                        <span>th child</span>
+                        <input type="number" id="till" oninput="handleInput(event, 'forTill')" />
+                        <span id="forTill">th</span>
+                        <span>child</span>
                         in
                         <select id="order">
                             <option value="first" selected>top to bottom</option>
@@ -213,6 +216,19 @@
         </footer>
     </main>
     <script>
+        const pr = new Intl.PluralRules('en-US', { type: 'ordinal' });
+
+        const suffixes = new Map([
+            ['one', 'st'],
+            ['two', 'nd'],
+            ['few', 'rd'],
+            ['other', 'th'],
+        ]);
+        const formatOrdinals = (n) => {
+            const rule = pr.select(n);
+            const suffix = suffixes.get(rule);
+            return suffix;
+        };
         function handleFormInput(event) {
             x.value = `p:nth${order.value === "first" ? "" : "-last"}-child(${every.value}n + ${from.value}):nth${order.value === "first" ? "" : "-last"}-child(-${every.value}n + ${till.value})`
             replaceSheet.innerHTML = `
@@ -224,6 +240,10 @@
         function copyOutputSelector(event) {
             const outputText = event.currentTarget.querySelector('output').innerText;
             navigator.clipboard.writeText(outputText);
+        }
+
+        function handleInput(event, id) {
+            document.getElementById(id).innerText = formatOrdinals(event.target.value);
         }
     </script>
 </body>
