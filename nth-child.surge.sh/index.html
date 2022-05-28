@@ -100,6 +100,10 @@
             text-align: center;
         }
 
+        .result p+p {
+            border-top: none;
+        }
+
         .result p::before {
             content: attr(data-attr)
         }
@@ -146,14 +150,15 @@
                         </select>
                         order
                     </div>
-                    <div>
-                        <p style="text-align: center;">
+                    <div style="text-align: center;">
+                        <p>
                             Your Selector should be
                         </p>
-                        <p>
+                        <p onclick="copyOutputSelector(event)">
                             <code>
                                 <output name=" x" id="x" for="from till every"></output>
                             </code>
+                            <button type="button">Copy Selector</button>
                         </p>
                     </div>
                 </form>
@@ -180,6 +185,26 @@
                     <p data-attr="18"></p>
                     <p data-attr="19"></p>
                     <p data-attr="20"></p>
+                    <p data-attr="21"></p>
+                    <p data-attr="22"></p>
+                    <p data-attr="23"></p>
+                    <p data-attr="24"></p>
+                    <p data-attr="25"></p>
+                    <p data-attr="26"></p>
+                    <p data-attr="27"></p>
+                    <p data-attr="28"></p>
+                    <p data-attr="29"></p>
+                    <p data-attr="30"></p>
+                    <p data-attr="31"></p>
+                    <p data-attr="32"></p>
+                    <p data-attr="33"></p>
+                    <p data-attr="34"></p>
+                    <p data-attr="35"></p>
+                    <p data-attr="36"></p>
+                    <p data-attr="37"></p>
+                    <p data-attr="38"></p>
+                    <p data-attr="39"></p>
+                    <p data-attr="40"></p>
                 </div>
             </section>
         </article>
@@ -195,6 +220,10 @@
                     background-color: red;
                 }
             `
+        }
+        function copyOutputSelector(event) {
+            const outputText = event.currentTarget.querySelector('output').innerText;
+            navigator.clipboard.writeText(outputText);
         }
     </script>
 </body>
